@@ -1,3 +1,7 @@
+chrome.action.setBadgeBackgroundColor({
+    color: "#1f2937"
+});
+
 function updateSeconds() {
     const seconds = new Date()
         .getSeconds()
@@ -10,5 +14,4 @@ function updateSeconds() {
 }
 
 updateSeconds();
-
 setInterval(updateSeconds, 1000);
