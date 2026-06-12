@@ -1,3 +1,7 @@
+chrome.runtime.onStartup.addListener(() => {
+    updateTime();
+});
+
 function drawHourIcon() {
     const hour = new Date()
         .getHours()
