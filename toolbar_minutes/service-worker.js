@@ -57,19 +57,8 @@ function startClock() {
         clearInterval(intervalId);
     }
 
-    const delay =
-        (60 - new Date().getSeconds()) * 1000
-        - new Date().getMilliseconds();
-
-    setTimeout(() => {
-
-        updateTime();
-
-        intervalId = setInterval(() => {
-            updateTime();
-        }, 60 * 1000);
-
-    }, delay);
+    // Update every 5 seconds
+    intervalId = setInterval(updateTime, 5000);
 }
 
 startClock();

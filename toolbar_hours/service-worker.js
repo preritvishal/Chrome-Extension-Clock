@@ -57,22 +57,8 @@ function startClock() {
         clearInterval(intervalId);
     }
 
-    const now = new Date();
-
-    const delay =
-        ((60 - now.getMinutes()) * 60 * 1000)
-        - (now.getSeconds() * 1000)
-        - now.getMilliseconds();
-
-    setTimeout(() => {
-
-        updateTime();
-
-        intervalId = setInterval(() => {
-            updateTime();
-        }, 60 * 60 * 1000);
-
-    }, delay);
+    // Update every minute
+    intervalId = setInterval(updateTime, 60000);
 }
 
 startClock();

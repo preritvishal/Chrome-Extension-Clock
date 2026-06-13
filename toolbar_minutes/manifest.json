@@ -3,7 +3,6 @@
   "name": "Toolbar Minutes",
   "version": "1.0",
   "description": "Displays current minutes in Chrome toolbar.",
-  "permissions": [],
   "background": {
     "service_worker": "service-worker.js"
   },
