@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Toolbar Hour",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "Displays current hour in the toolbar icon.",
   "background": {
     "service_worker": "service-worker.js"
   },
   "action": {
     "default_title": "Toolbar Hour"
-  }
+  },
+  
 }
