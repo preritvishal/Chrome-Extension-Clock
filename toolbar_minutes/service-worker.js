@@ -12,7 +12,7 @@ function updateTime() {
 
     const now = new Date();
 
-    const hours = now.getHours()
+    const minutes = now.getMinutes()
         .toString()
         .padStart(2, '0');
 
@@ -31,7 +31,7 @@ function updateTime() {
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
 
-    ctx.fillText(hours, 0, 11);
+    ctx.fillText(minutes, 0, 11);
 
     const imageData = ctx.getImageData(
         0,
@@ -45,7 +45,7 @@ function updateTime() {
     });
 
     chrome.action.setTitle({
-        title: `Current Hour: ${hours}`
+        title: `Current Minute: ${minutes}`
     });
 }
 
@@ -57,12 +57,9 @@ function startClock() {
         clearInterval(intervalId);
     }
 
-    const now = new Date();
-
     const delay =
-        ((60 - now.getMinutes()) * 60 * 1000)
-        - (now.getSeconds() * 1000)
-        - now.getMilliseconds();
+        (60 - new Date().getSeconds()) * 1000
+        - new Date().getMilliseconds();
 
     setTimeout(() => {
 
@@ -70,7 +67,7 @@ function startClock() {
 
         intervalId = setInterval(() => {
             updateTime();
-        }, 60 * 60 * 1000);
+        }, 60 * 1000);
 
     }, delay);
 }

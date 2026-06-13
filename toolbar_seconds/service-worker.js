@@ -1,61 +1,75 @@
 chrome.runtime.onStartup.addListener(() => {
-    updateTime();
+    startClock();
 });
 
-chrome.action.setBadgeBackgroundColor({
-    color: '#000000'
+chrome.runtime.onInstalled.addListener(() => {
+    startClock();
 });
+
+let intervalId = null;
 
 function updateTime() {
 
     const now = new Date();
 
-    const minutes = now.getMinutes()
-        .toString()
-        .padStart(2, '0');
-
     const seconds = now.getSeconds()
         .toString()
         .padStart(2, '0');
 
-    // Badge = seconds
-    chrome.action.setBadgeText({
-        text: seconds
-    });
+    const pixelSize = 20;
 
-    // Icon = minutes
-    const canvas = new OffscreenCanvas(32, 32);
+    const canvas = new OffscreenCanvas(pixelSize, pixelSize);
     const ctx = canvas.getContext('2d');
 
-    // Black background
+    // Background
     ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, 32, 32);
+    ctx.fillRect(0, 0, pixelSize, pixelSize);
 
-    // White text
+    // Text
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 18px Arial';
-    // ctx.textAlign = 'center';
-    ctx.textAlign = 'left'; // to ensure readability
-    
+    ctx.font = 'bold 18px Monospace';
+    ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
 
-    // ctx.fillText(minutes, 16, 16);
-    ctx.fillText(minutes, 2, 16);
+    ctx.fillText(seconds, 0, 11);
 
-
-    const imageData = ctx.getImageData(0, 0, 32, 32);
+    const imageData = ctx.getImageData(
+        0,
+        0,
+        pixelSize,
+        pixelSize
+    );
 
     chrome.action.setIcon({
         imageData
     });
 
     chrome.action.setTitle({
-        title: `Current Time: ${now.getHours()
-            .toString()
-            .padStart(2, '0')}:${minutes}:${seconds}`
+        title: `Current Second: ${seconds}`
     });
 }
 
-updateTime();
+function startClock() {
 
-setInterval(updateTime, 1000);
+    updateTime();
+
+    // Prevent multiple intervals
+    if (intervalId !== null) {
+        clearInterval(intervalId);
+    }
+
+    // Align to next second boundary
+    const delay = 1000 - (Date.now() % 1000);
+
+    setTimeout(() => {
+
+        updateTime();
+
+        intervalId = setInterval(() => {
+            updateTime();
+        }, 1000);
+
+    }, delay);
+}
+
+startClock();
