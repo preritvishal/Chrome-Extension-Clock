@@ -21,11 +21,9 @@ function updateTime() {
     const canvas = new OffscreenCanvas(pixelSize, pixelSize);
     const ctx = canvas.getContext('2d');
 
-    // Background
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, pixelSize, pixelSize);
 
-    // Text
     ctx.fillStyle = '#FFFFFF';
     ctx.font = 'bold 18px Monospace';
     ctx.textAlign = 'left';
@@ -57,8 +55,8 @@ function startClock() {
         clearInterval(intervalId);
     }
 
-    // Update every minute
-    intervalId = setInterval(updateTime, 60000);
+    // Same heartbeat as Minutes
+    intervalId = setInterval(updateTime, 5000);
 }
 
 startClock();
